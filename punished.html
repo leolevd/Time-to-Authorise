@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time to authorise | Hack Club</title>
+</head>
+<body>
+    <h1>STOP IT!</h1>
+    <p style="user-select: none;">WE PAY FOR OUR HOSTING AND YOU'RE WASTING IT!<br>YOU'VE BROKEN OUR WAITING SCREEN!<br>CLIKED EVERYTHING OFF SHELVES IN THE STORE!<br>ENOUGH! YOU ARE PUNISHED!</p>
+    <script>
+        let p = document.querySelector('p');
+        let clicks = 0;
+        const maxClicks = 10;
+        p.addEventListener('click', () => {
+            clicks++;
+            if (clicks <= maxClicks) {
+                p.textContent = "ouch ".repeat(clicks) ;
+            } else {
+                p.textContent = "Fine. You win.";
+                after(2000).then(() => {
+                    p.textContent = "You are now free to go.";
+                    after(2000).then(() => {
+                        p.textContent = "You may now leave this page.";
+                        after(2000).then(() => {
+                            p.textContent = "Goodbye.";
+                            after(2000).then(() => {
+                                p.textContent = "Seriously, leave now.";
+                                after(2000).then(() => {
+                                    p.textContent = "This is your last warning.";
+                                    after(2000).then(() => {
+                                        p.textContent = "LEAVE!";
+                                        after(2000).then(() => {
+                                            p.textContent = "I mean it.";
+                                            after(2000).then(() => {
+                                                p.textContent = "Please.";
+                                                after(2000).then(() => {
+                                                    p.textContent = "Goodbye.";
+                                                    after(2000).then(() => {
+                                                        window.location.href = "https://google.com";
+                                                    })
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

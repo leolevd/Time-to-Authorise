@@ -1,10 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time to Authorise | Hack Club</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: system-ui, sans-serif;
+            background: #111315;
+            color: #e7e9eb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px;
+            line-height: 1.6;
+        }
+
+        nav,
+        #latest,
+        #deal,
+        #merch,
+        #drinks {
+            margin: 0 0 20px;
+            padding: 20px;
+            border: 1px solid #303438;
+            border-radius: 8px;
+            background: #191c1f;
+        }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 22px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        a {
+            color: #9fc8ff;
+            text-decoration: none;
+        }
+
+        a:hover,
+        a:focus-visible {
+            color: #d0e3ff;
+            text-decoration: underline;
+        }
+
+        h2,
+        h3 {
+            line-height: 1.25;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+        }
+
+        .item {
+            overflow: hidden;
+            border: 1px solid #303438;
+            border-radius: 6px;
+            background: #202428;
+        }
+
+        .item img {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #292e33;
+        }
+
+        .item p {
+            margin: 0;
+            padding: 10px 12px;
+        }
+
+        .item .price {
+            display: block;
+            padding: 0 12px 12px;
+            color: #a8e6b0;
+            font-weight: 700;
+        }
+
+        @media (max-width: 520px) {
+            body {
+                padding: 14px;
+            }
+
+            nav,
+            #latest,
+            #deal,
+            #merch,
+            #drinks {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <nav>
         <ul>
@@ -19,24 +123,197 @@
     <div id="latest">
         <h3>Latest products</h3>
         <p>Check out our latest products!</p>
-        <div class="products"></div>
+        <div class="products">
+            <div class="item"><img class="ph" alt="Custom enamel keychain">
+                <p>Custom Enamel Keychain</p><span style="display: none;" class="keyword">keychain</span><span
+                    class="price">$15</span>
+            </div>
+            <div class="item"><img class="ph" alt="Mechanical keyboard">
+                <p>Mechanical Keyboard</p><span style="display: none;" class="keyword">keyboard</span><span
+                    class="price">$240</span>
+            </div>
+            <div class="item"><img class="ph" alt="Wireless gaming mouse">
+                <p>Wireless Gaming Mouse</p><span style="display: none;" class="keyword">mouse</span><span
+                    class="price">$90</span>
+            </div>
+            <div class="item"><img class="ph" alt="Noise-cancelling headphones">
+                <p>Noise-Cancelling Headphones</p><span style="display: none;" class="keyword">headphones</span><span
+                    class="price">$450</span>
+            </div>
+            <div class="item"><img class="ph" alt="Portable Bluetooth speaker">
+                <p>Portable Bluetooth Speaker</p><span style="display: none;" class="keyword">speaker</span><span
+                    class="price">$180</span>
+            </div>
+            <div class="item"><img class="ph" alt="USB-C charging hub">
+                <p>USB-C Charging Hub</p><span style="display: none;" class="keyword">charger</span><span
+                    class="price">$75</span>
+            </div>
+        </div>
     </div>
     </div>
     <div id="deal">
         <h3>Steal Deals</h3>
         <p>Don't miss out on our steal deals!</p>
-        <div class="products"></div>
+        <div class="products">
+            <div class="item"><img class="ph" alt="Braided USB-C cable">
+                <p>Braided USB-C Cable</p><span style="display: none;" class="keyword">cable</span><span
+                    class="price">$24</span>
+            </div>
+            <div class="item"><img class="ph" alt="Laptop stand">
+                <p>Aluminum Laptop Stand</p><span style="display: none;" class="keyword">stand</span><span
+                    class="price">$105</span>
+            </div>
+            <div class="item"><img class="ph" alt="Desk mouse pad">
+                <p>Large Desk Mat</p><span style="display: none;" class="keyword">deskmat</span><span
+                    class="price">$60</span>
+            </div>
+            <div class="item"><img class="ph" alt="Webcam">
+                <p>HD Streaming Webcam</p><span style="display: none;" class="keyword">webcam</span><span
+                    class="price">$150</span>
+            </div>
+            <div class="item"><img class="ph" alt="USB flash drive">
+                <p>128GB Flash Drive</p><span style="display: none;" class="keyword">storage</span><span
+                    class="price">$45</span>
+            </div>
+            <div class="item"><img class="ph" alt="Wireless phone charger">
+                <p>Wireless Phone Charger</p><span style="display: none;" class="keyword">wireless</span><span
+                    class="price">$54</span>
+            </div>
+            <div class="item"><img class="ph" alt="Compact power bank">
+                <p>Compact Power Bank</p><span style="display: none;" class="keyword">powerbank</span><span
+                    class="price">$90</span>
+            </div>
+            <div class="item"><img class="ph" alt="Smart LED desk lamp">
+                <p>Smart LED Desk Lamp</p><span style="display: none;" class="keyword">lamp</span><span
+                    class="price">$120</span>
+            </div>
+        </div>
     </div>
     <div id="merch">
         <h3>Brand merch</h3>
         <p>Show off your love for Drennelgenton Systems with our brand merch!</p>
-        <div class="products"></div>
+        <div class="products">
+            <div class="item"><img class="ph" alt="Logo T-shirt">
+                <p>Drennelgenton Logo T-Shirt</p><span style="display: none;" class="keyword">shirt</span><span
+                    class="price">$75</span>
+            </div>
+            <div class="item"><img class="ph" alt="Logo hoodie">
+                <p>Cozy Logo Hoodie</p><span style="display: none;" class="keyword">hoodie</span><span
+                    class="price">$150</span>
+            </div>
+            <div class="item"><img class="ph" alt="Embroidered baseball cap">
+                <p>Embroidered Cap</p><span style="display: none;" class="keyword">cap</span><span
+                    class="price">$54</span>
+            </div>
+            <div class="item"><img class="ph" alt="Logo enamel pin">
+                <p>Logo Enamel Pin</p><span style="display: none;" class="keyword">pin</span><span
+                    class="price">$21</span>
+            </div>
+            <div class="item"><img class="ph" alt="Canvas tote bag">
+                <p>Canvas Tote Bag</p><span style="display: none;" class="keyword">tote</span><span
+                    class="price">$45</span>
+            </div>
+            <div class="item"><img class="ph" alt="Insulated travel mug">
+                <p>Insulated Travel Mug</p><span style="display: none;" class="keyword">mug</span><span
+                    class="price">$60</span>
+            </div>
+        </div>
     </div>
     <div id="drinks">
         <h3>Free drinks</h3>
         <p>Enjoy our energy drinks!</p>
         <span style="color: red;">Note: You can only get one free drink per $2000 spent</span>
-        <div class="products"></div>
+        <div class="products">
+            <div class="item"><img class="ph" alt="Citrus energy drink">
+                <p>Citrus Energy Drink</p><span style="display: none;" class="keyword">citrus</span><span
+                    class="price">Free</span>
+            </div>
+            <div class="item"><img class="ph" alt="Berry energy drink">
+                <p>Berry Energy Drink</p><span style="display: none;" class="keyword">berry</span><span
+                    class="price">Free</span>
+            </div>
+            <div class="item"><img class="ph" alt="Tropical energy drink">
+                <p>Tropical Energy Drink</p><span style="display: none;" class="keyword">tropical</span><span
+                    class="price">Free</span>
+            </div>
+            <div class="item"><img class="ph" alt="Zero sugar energy drink">
+                <p>Zero Sugar Energy Drink</p><span style="display: none;" class="keyword">sugarfree</span><span
+                    class="price">Free</span>
+            </div>
+            <div class="item"><img class="ph" alt="Cherry energy drink">
+                <p>Cherry Energy Drink</p><span style="display: none;" class="keyword">cherry</span><span
+                    class="price">Free</span>
+            </div>
+            <div class="item"><img class="ph" alt="Lime energy drink">
+                <p>Lime Energy Drink</p><span style="display: none;" class="keyword">lime</span><span
+                    class="price">Free</span>
+            </div>
+        </div>
     </div>
+    <!-- I'm really sorry for those images, it's really hard to find a public service that gives me images for keyboards. this code was made by Claude and barely works. Yeah, ugly)) -->
+    <script>
+        // null = no good match exists, so show the labeled placeholder
+        const terms = {
+            keychain: null, keyboard: ['keyboard'], mouse: ['mouse'],
+            headphones: ['headphone', 'headphones', 'earphone', 'earphones', 'airpods'],
+            speaker: ['speaker', 'speakers'], charger: ['charger', 'hub'],
+            cable: ['cable'], stand: ['laptop stand'], deskmat: null, webcam: null,
+            storage: ['flash drive', 'usb'], wireless: ['charger'], powerbank: ['power bank'],
+            lamp: ['lamp'], shirt: ['shirt'], hoodie: ['hoodie', 'sweater'],
+            cap: null, pin: null, tote: ['handbag', 'bag'], mug: ['mug'],
+            citrus: ['juice'], berry: ['berry', 'mulberry', 'blackberry'],
+            tropical: ['pineapple', 'mango'], sugarfree: ['cola', 'soda'],
+            cherry: ['cherry', 'cherries'], lime: ['lime']
+        };
+
+        (async () => {
+            const placeholder = img =>
+                `https://placehold.co/300x300/292e33/e7e9eb?text=${encodeURIComponent(img.alt)}`;
+
+            let products = [];
+            try {
+                const r = await fetch('https://dummyjson.com/products?limit=0&select=title,tags,category,thumbnail');
+                products = (await r.json()).products || [];
+            } catch (e) { console.warn('dummyjson failed', e); }
+
+            const used = new Set();
+            for (const img of document.querySelectorAll('img.ph')) {
+                const keyword = img.parentNode.querySelector('.keyword').textContent.trim();
+                const list = keyword in terms ? terms[keyword] : [keyword];
+
+                const match = list && products.find(p => {
+                    if (used.has(p.thumbnail)) return false;
+                    const text = p.title + ' ' + (p.tags || []).join(' ') + ' ' + p.category;
+                    return list.some(t => new RegExp('\\b' + t + '\\b', 'i').test(text));
+                });
+
+                if (match) used.add(match.thumbnail);
+                console.log(keyword, '->', match ? match.title : '(placeholder)');
+
+                img.onerror = () => { img.onerror = null; img.src = placeholder(img); };
+                img.src = match ? match.thumbnail : placeholder(img);
+            }
+        })();
+    </script>
+    <script>
+        const neededclicks1 = 10;
+        const neededclicks2 = 18;
+        let clickCount = 0;
+        let rickrolled = false;
+        // Add a click event listener to each product item
+        document.querySelectorAll('.item').forEach(item => {
+            item.addEventListener('click', () => {
+                clickCount++;
+                if (clickCount >= neededclicks1 && clickCount < neededclicks2 && !rickrolled) {
+                    rickrolled = true;
+                    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+                } else if (clickCount >= neededclicks2) {
+                    window.location.href = 'punished.html';
+                }
+                alert(`Clicking wastes our time, please stop. We know you aren't gonna buy this anyways, so go play minecraft or something. We put so much effort in it, and here you come glancing at our products pretending to be interested.`);
+            });
+        });
+    </script>
 </body>
+
 </html>
