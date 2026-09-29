@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time to authorise | Hack Club</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            color: #ec3750;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #ffffff;
+            user-select: none;
+            cursor: default;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
+
 <body>
     <h1>STOP IT!</h1>
-    <p style="user-select: none;">WE PAY FOR OUR HOSTING AND YOU'RE WASTING IT!<br>YOU'VE BROKEN OUR WAITING SCREEN!<br>CLIKED EVERYTHING OFF SHELVES IN THE STORE!<br>ENOUGH! YOU ARE PUNISHED!</p>
+    <p>WE PAY FOR OUR HOSTING AND YOU'RE WASTING IT!<br>YOU'VE BROKEN OUR WAITING
+        SCREEN!<br>CLIKED EVERYTHING OFF SHELVES IN THE STORE!<br>ENOUGH! YOU ARE PUNISHED!</p>
     <script>
+        const after = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
         let p = document.querySelector('p');
         let clicks = 0;
         const maxClicks = 10;
+        let triggered = false;
+
         p.addEventListener('click', () => {
+            if (triggered) return;
+
             clicks++;
             if (clicks <= maxClicks) {
-                p.textContent = "ouch ".repeat(clicks) ;
+                p.textContent = "ouch ".repeat(clicks);
             } else {
+                triggered = true;
                 p.textContent = "Fine. You win.";
                 after(2000).then(() => {
                     p.textContent = "You are now free to go.";
@@ -24,7 +60,7 @@
                         p.textContent = "You may now leave this page.";
                         after(2000).then(() => {
                             p.textContent = "Goodbye.";
-                            after(2000).then(() => {
+                            after(10000).then(() => {
                                 p.textContent = "Seriously, leave now.";
                                 after(2000).then(() => {
                                     p.textContent = "This is your last warning.";
@@ -38,7 +74,7 @@
                                                     p.textContent = "Goodbye.";
                                                     after(2000).then(() => {
                                                         window.location.href = "https://google.com";
-                                                    })
+                                                    });
                                                 });
                                             });
                                         });
@@ -52,4 +88,5 @@
         });
     </script>
 </body>
+
 </html>
