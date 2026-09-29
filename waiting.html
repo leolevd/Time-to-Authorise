@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time to Authorise | Hack Club</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #000000;
+            margin: 0;
+            padding: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+    </style>
+
+</head>
+<body>
+    <p>You have successfully submitted your application. Please wait while we review your information.</p>
+    <p>While you wait, feel free to watch our satisfying animation.</p>
+    <canvas id="animationCanvas" width="400" height="300"></canvas>
+    <script>
+        // Made by github copilot))) P.S. Copilot seggested to add modified by me lol idk what he meant tho)
+        const canvas = document.getElementById('animationCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, size;
+        const facets = 12;
+
+        function resize() {
+            const ratio = window.devicePixelRatio || 1;
+            const box = canvas.getBoundingClientRect();
+            width = box.width;
+            height = box.height;
+            size = Math.min(width, height) * 0.43;
+            canvas.width = width * ratio;
+            canvas.height = height * ratio;
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        }
+
+        function animate(now) {
+            const time = now * 0.00025;
+            ctx.fillStyle = '#090d1c';
+            ctx.fillRect(0, 0, width, height);
+            ctx.save();
+            ctx.translate(width / 2, height / 2);
+            ctx.globalCompositeOperation = 'screen';
+
+            for (let i = 0; i < facets; i++) {
+                ctx.save();
+                ctx.rotate(i * Math.PI * 2 / facets + time * (i % 2 ? 1 : -1));
+                const hue = (185 + i * 19 + now * 0.018) % 360;
+                const reach = size * (0.88 + 0.12 * Math.sin(time * 3 + i));
+                const color = `hsla(${hue}, 100%, 68%, .48)`;
+                const gradient = ctx.createLinearGradient(0, 0, reach, 0);
+                gradient.addColorStop(0, `hsla(${hue}, 100%, 75%, .05)`);
+                gradient.addColorStop(.6, color);
+                gradient.addColorStop(1, `hsla(${(hue + 48) % 360}, 100%, 75%, .1)`);
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(reach * .25, -size * .12, reach * .55, -size * .4, reach, 0);
+                ctx.bezierCurveTo(reach * .55, size * .4, reach * .25, size * .12, 0, 0);
+                ctx.fill();
+                ctx.strokeStyle = `hsla(${hue}, 100%, 88%, .55)`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            ctx.restore();
+            requestAnimationFrame(animate);
+        }
+
+        resize();
+        window.addEventListener('resize', resize);
+        requestAnimationFrame(animate);
+    </script>
+    <script>
+        let clickCount = 0;
+        const maxClicks = 5;
+        const canvas1 = document.querySelector('canvas');
+        let isFalling = false;
+        canvas1.addEventListener('click', (event) => {
+            if (isFalling) return;
+            clickCount++;
+            const clickedCanvas = event.currentTarget;
+            clickedCanvas.style.transform = `translateY(${clickCount * -2}px)`;
+            if (clickCount >= maxClicks) {
+                // now let's apply gravity to the canvas AND MAKE IT FALL DOWN THE PAGE
+                isFalling = true;
+                let velocity = 0;
+                const gravity = 5.5;
+                const fallInterval = setInterval(() => {
+                    velocity += gravity;
+                    clickedCanvas.style.transform = `translateY(${clickCount * 10 + velocity}px)`;
+                    if (clickedCanvas.getBoundingClientRect().top > window.innerHeight) {
+                        clearInterval(fallInterval);
+                        alert('We appreciate your impatience. Due to you being so impatient we decided to skip review, just please don\'t break anything else');
+                        window.location.href = 'shop.html';
+                    }
+                }, 16);
+            }
+        });
+    </script>
+</body>
+</html>

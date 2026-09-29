@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time to Authorise | Hack Club</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: system-ui, sans-serif;
+            background: #111318;
+            color: #e7e9ee;
+        }
+
+        body {
+            max-width: 520px;
+            margin: 48px auto;
+            padding: 0 20px;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+            padding: 24px;
+            background: #1b1e25;
+            border: 1px solid #30343e;
+            border-radius: 12px;
+        }
+
+        input, textarea, button {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #414653;
+            border-radius: 6px;
+            background: #12151b;
+            color: inherit;
+            font: inherit;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            accent-color: #8b7cff;
+        }
+
+        .checkbox-field {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-field input[type="checkbox"] { flex: 0 0 auto; }
+        .checkbox-field label { cursor: pointer; }
+
+        textarea { min-height: 90px; resize: vertical; }
+        a { color: #a99eff; }
+        button {
+            border: 0;
+            background: #7463e8;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        button:hover { background: #8576f2; }
+        input:focus, textarea:focus, button:focus-visible {
+            outline: 2px solid #a99eff;
+            outline-offset: 2px;
+        }
+
+        h1 { margin: 0; font-size: 1.6rem; }
+        .intro { margin: 0; color: #b5bac6; line-height: 1.5; }
+        .field { display: grid; gap: 6px; }
+        .field label { font-weight: 600; }
+        .hint { color: #b5bac6; font-size: .85rem; }
+        @media (max-width: 560px) {
+            body { margin: 24px auto; }
+            form { padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <form id="application-form" novalidate>
+        <h1>Create your account</h1>
+        <p class="intro">Fill in your details to submit your application.</p>
+        <div class="field">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" autocomplete="username" minlength="3" maxlength="30" pattern="[A-Za-z0-9._-]+" required>
+        </div>
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+        </div>
+        <div class="field">
+            <label for="bio">Bio</label>
+            <textarea id="bio" name="bio" maxlength="500" minlength="20" required></textarea>
+        </div>
+        <div class="field">
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number" min="13" max="120" required>
+        </div>
+        <div class="field">
+            <label for="resume">Resume (text file)</label>
+            <input id="resume" name="resume" type="file" accept=".txt,text/plain" required>
+        </div>
+        <div class="checkbox-field">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">I agree to the <a href="terms.html" target="_blank">Terms and Conditions</a></label>
+        </div>
+        <div class="checkbox-field">
+            <input type="checkbox" id="privacy" required>
+            <label for="privacy">I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a></label>
+        </div>
+        <div class="checkbox-field">
+            <input type="checkbox" id="right-limiting" required>
+            <label for="right-limiting">I agree that I lose all rights by entering this application</label>
+        </div>
+        <br>
+        <div class="field">
+            <label for="last-date">Last date</label>
+            <input id="last-date" name="last-date" type="date" required>
+        </div>
+        <div class="field">
+            <label for="first-date">First date</label>
+            <input id="first-date" name="first-date" type="date" required>
+        </div>
+        <div class="field">
+            <label for="favorite-date">Favorite date</label>
+            <input id="favorite-date" name="favorite-date" type="date" required>
+        </div>
+        <div class="field">
+            <label for="partner-name">Current partner's name</label>
+            <input id="partner-name" name="partner-name" type="text" maxlength="100" minlength="2" pattern="[A-Za-zÀ-ÖØ-öø-ÿ' .-]+" required>
+        </div>
+        <button type="submit">Submit</button>
+
+    </form>
+    <script>
+        const form = document.getElementById('application-form');
+
+        const setFieldError = (field, message) => {
+            field.setCustomValidity(message || '');
+            field.reportValidity();
+        };
+
+        const validateUsername = () => {
+            const field = document.getElementById('username');
+            const value = field.value.trim();
+            if (!value) return setFieldError(field, 'Please provide a username.');
+            if (value.length < 3 || value.length > 30) return setFieldError(field, 'Username must be between 3 and 30 characters.');
+            if (!/^[A-Za-z0-9._-]+$/.test(value)) return setFieldError(field, 'Username may only contain letters, numbers, periods, underscores, and hyphens.');
+            if (/^(admin|root|hackclub|moderator)$/i.test(value)) return setFieldError(field, 'This username is reserved for previous applicants. Please choose a different one.');
+            field.setCustomValidity('');
+        };
+
+        const validateEmail = () => {
+            const field = document.getElementById('email');
+            const value = field.value.trim();
+            if (!value) return setFieldError(field, 'Email is required.');
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return setFieldError(field, 'Please enter a valid email address.');
+            if (value.includes('..')) return setFieldError(field, 'Email addresses do not contain repeated periods.');
+            field.setCustomValidity('');
+        };
+
+        const validatePassword = () => {
+            const field = document.getElementById('password');
+            const value = field.value;
+            if (!value) return setFieldError(field, 'Password is required.');
+            if (value.length < 8) return setFieldError(field, 'Password must be at least 8 characters.');
+            if (value.includes(' ')) return setFieldError(field, 'Password cannot contain spaces.');
+            if (!/[A-Z]/.test(value)) return setFieldError(field, 'Password must include at least one uppercase letter.');
+            if (!/[0-9]/.test(value)) return setFieldError(field, 'Password must include at least one number.');
+            if (!/[^A-Za-z0-9\s]/.test(value)) return setFieldError(field, 'Password must include at least one symbol.');
+            field.setCustomValidity('');
+        };
+
+        const validateBio = () => {
+            const field = document.getElementById('bio');
+            const value = field.value.trim();
+            if (!value) return setFieldError(field, 'Bio is required.');
+            if (value.length < 20) return setFieldError(field, 'Bio must be at least 20 characters. We are not accepting "hello" as a personality.');
+            if (value.length > 500) return setFieldError(field, 'Bio is too long. Please keep it under 500 characters.');
+            if (/^(n\/a|na|none|lol|test)$/i.test(value)) return setFieldError(field, 'Please provide a meaningful bio. This is a serious application.');
+            field.setCustomValidity('');
+        };
+
+        const validateAge = () => {
+            const field = document.getElementById('age');
+            const value = Number(field.value);
+            if (!field.value) return setFieldError(field, 'Age is required.');
+            if (!Number.isInteger(value) || value < 13 || value > 120) return setFieldError(field, 'Age must be a whole number between 13 and 120.');
+            field.setCustomValidity('');
+        };
+
+        const validateResume = () => {
+            const field = document.getElementById('resume');
+            const file = field.files[0];
+            if (!file) return setFieldError(field, 'Please upload your resume as a plain text file.');
+            if (!/\.txt$/i.test(file.name)) return setFieldError(field, 'Resume must be a .txt file. No PDFs, no images, no excuses.');
+            if (file.size > 2 * 1024 * 1024) return setFieldError(field, 'Resume is too large. Please keep it under 2MB.');
+            field.setCustomValidity('');
+        };
+
+        const validateCheckbox = (field, message) => {
+            if (!field.checked) {
+                field.setCustomValidity(message);
+                field.reportValidity();
+                return false;
+            }
+            field.setCustomValidity('');
+            return true;
+        };
+
+        const validateDates = () => {
+            const lastDate = document.getElementById('last-date');
+            const firstDate = document.getElementById('first-date');
+            const favoriteDate = document.getElementById('favorite-date');
+
+            if (!lastDate.value) return setFieldError(lastDate, 'Please provide the last date.');
+            if (!firstDate.value) return setFieldError(firstDate, 'Please provide the first date.');
+            if (!favoriteDate.value) return setFieldError(favoriteDate, 'Please provide your favorite date.');
+
+            const first = new Date(firstDate.value);
+            const last = new Date(lastDate.value);
+            const favorite = new Date(favoriteDate.value);
+
+            if (first > last) return setFieldError(lastDate, 'The last date must be later than the first date.');
+            if (favorite < first || favorite > last) return setFieldError(favoriteDate, 'Favorite date must fall between the first and last date.');
+
+            firstDate.setCustomValidity('');
+            lastDate.setCustomValidity('');
+            favoriteDate.setCustomValidity('');
+        };
+
+        const validatePartnerName = () => {
+            const field = document.getElementById('partner-name');
+            const value = field.value.trim();
+            if (!value) return setFieldError(field, 'Please enter your current partner\'s name.');
+            if (value.length < 2) return setFieldError(field, 'The partner name is too short.');
+            if (!/^[A-Za-zÀ-ÖØ-öø-ÿ' .-]+$/.test(value)) return setFieldError(field, 'Partner name may only contain letters, spaces, apostrophes, periods, and hyphens.');
+            if (/^(n\/a|na|none|unknown)$/i.test(value)) return setFieldError(field, 'Please provide a real name. This field is not for placeholder text.');
+            field.setCustomValidity('');
+        };
+
+        document.getElementById('username').addEventListener('blur', validateUsername);
+        document.getElementById('email').addEventListener('blur', validateEmail);
+        document.getElementById('password').addEventListener('blur', validatePassword);
+        document.getElementById('password').addEventListener('input', validatePassword);
+        document.getElementById('bio').addEventListener('blur', validateBio);
+        document.getElementById('age').addEventListener('blur', validateAge);
+        document.getElementById('resume').addEventListener('change', validateResume);
+        document.getElementById('last-date').addEventListener('change', validateDates);
+        document.getElementById('first-date').addEventListener('change', validateDates);
+        document.getElementById('favorite-date').addEventListener('change', validateDates);
+        document.getElementById('partner-name').addEventListener('blur', validatePartnerName);
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            validateUsername();
+            validateEmail();
+            validatePassword();
+            validateBio();
+            validateAge();
+            validateResume();
+            validateDates();
+            validatePartnerName();
+
+            const terms = document.getElementById('terms');
+            const privacy = document.getElementById('privacy');
+            const rights = document.getElementById('right-limiting');
+
+            if (!validateCheckbox(terms, 'You must agree to the Terms and Conditions before submitting.')) return;
+            if (!validateCheckbox(privacy, 'You must agree to the Privacy Policy before submitting.')) return;
+            if (!validateCheckbox(rights, 'You must confirm that your rights are relinquished as part of this application.')) return;
+
+            if (!form.checkValidity()) {
+                return;
+            }
+
+            alert('Application submitted successfully.');
+            window.location.href = 'waiting.html';
+        });
+    </script>
+</body>
+</html>
