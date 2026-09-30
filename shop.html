@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time to Authorise | Hack Club</title>
     <style>
+
         :root {
             color-scheme: dark;
             font-family: system-ui, sans-serif;
@@ -313,6 +314,65 @@
                 alert(`Clicking wastes our time, please stop. We know you aren't gonna buy this anyways, so go play minecraft or something. We put so much effort in it, and here you come glancing at our products pretending to be interested.`);
             });
         });
+    </script>
+    <script> // made by Claude
+        (() => {
+            const HITS_NEEDED = 5;
+            const MIN_SPEED = 1.5;
+            const RESET_AFTER = 3000;
+
+            let hits = 0;
+            let lastY = window.scrollY;
+            let lastT = performance.now();
+            let lastHitT = 0;
+            let wasAtBottom = false;
+
+            const atBottom = () =>
+                window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+            function registerHit() {
+                const now = performance.now();
+                if (now - lastHitT > RESET_AFTER) hits = 0;
+                lastHitT = now;
+                hits++;
+                document.body.style.backgroundColor = '#860000';
+                document.querySelectorAll('div').forEach(div => {
+                    div.style.backgroundColor = '#860000';
+                });
+                setTimeout(() => {
+                    document.body.style.backgroundColor = '';
+                    document.querySelectorAll('div').forEach(div => {
+                        div.style.backgroundColor = '';
+                    });
+                }, 100);
+
+                if (hits >= HITS_NEEDED) {
+                    hits = 0;
+                    onTrigger();
+                }
+            }
+
+
+            window.addEventListener('scroll', () => {
+                const now = performance.now();
+                const y = window.scrollY;
+                const speed = (y - lastY) / (now - lastT);
+
+                const nowBottom = atBottom();
+                if (nowBottom && !wasAtBottom && speed >= MIN_SPEED) {
+                    registerHit();
+                }
+                wasAtBottom = nowBottom;
+                lastY = y;
+                lastT = now;
+            }, { passive: true });
+
+
+
+            function onTrigger() {
+                window.location.href = 'far_lands.html';
+            }
+        })();
     </script>
 </body>
 

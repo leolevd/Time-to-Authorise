@@ -44,7 +44,7 @@
         let clicks = 0;
         const maxClicks = 10;
         let triggered = false;
-
+        let endingelem = `<div style="color: lime; background-color: black; border: 1px solid lime; width: 140px; height: 60px; text-align: center; display: flex; align-items: center; justify-content: center;"><p style="font-size: 24px; font-weight: 700; font-family: monospace; ">ENDING #1</p></div>`;
         p.addEventListener('click', () => {
             if (triggered) return;
 
@@ -53,6 +53,7 @@
                 p.textContent = "ouch ".repeat(clicks);
             } else {
                 triggered = true;
+                document.querySelector('h1').outerHTML = endingelem;
                 p.textContent = "Fine. You win.";
                 after(2000).then(() => {
                     p.textContent = "You are now free to go.";
@@ -73,7 +74,7 @@
                                                 after(2000).then(() => {
                                                     p.textContent = "Goodbye.";
                                                     after(2000).then(() => {
-                                                        window.location.href = "https://google.com";
+                                                        window.location.href = "/index.html";
                                                     });
                                                 });
                                             });
