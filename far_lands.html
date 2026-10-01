@@ -4,14 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T♣m☺ t• A♦th♠ri♥e | ○a§k C♦u►</title>
+    <title>T♣m◘ t• A♦th♠ri♥e | ○a§k C♦u►</title>
     <!-- idk if anyone gets this but this cursed text represents how far lands look in Minecraft -->
     <!--                       I really wanted to put these here                                 -->
     <!--       And now I have to come up with procedural generating in browser to do this....    -->
 </head>
 
 <body style="margin: 0; padding: 0; background-color: black; color: white; font-family: monospace;">
-    <div
+    <script>
+        async function request_spacebar() {
+            let contents = `
+            <div
         style="color: lime; background-color: black; border: 1px solid lime; width: 140px; height: 60px; text-align: center; display: flex; align-items: center; justify-content: center; position: fixed; z-index: 9999;">
         <p style="font-size: 24px; font-weight: 700; font-family: monospace; ">ENDING #2</p>
     </div>
@@ -21,53 +24,71 @@
     </div>
     <img src="far_lands_tower.png"
         alt="Oh no my super high far lands img failed to load :(. DM me or even better make a pull request that will fix this)))))"
-        style="width: 100%; height: auto;">
-    <script>
-        const msg = document.querySelector("div#msg").querySelector("p");
-        function screamer() {
-            window.scrollTo(0, 0);
-            document.documentElement.style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
-            document.body.innerHTML = "";
-            document.body.style.backgroundColor = "black";
-            document.body.appendChild(document.createElement("img"));
-            document.querySelector("img").src = "screamer.png"
-            document.querySelector("img").style = "width: 100%; height: auto;"
-            setTimeout(() => {
+        style="width: 100%; height: auto;">`
+            document.body.appendChild(document.createElement("div"))
+            document.querySelector("div").textContent = "Press space to stand up"
+
+            const event = await new Promise(resolve => {
+                window.addEventListener("keydown", resolve, { once: true });
+            });
+            document.querySelector("div").innerHTML = contents
+        }
+        async function main() {
+            const msg = document.querySelector("div#msg").querySelector("p");
+            function screamer() {
+                window.scrollTo(0, 0);
+                document.documentElement.style.overflow = "hidden";
+                document.body.style.overflow = "hidden";
                 document.body.innerHTML = "";
                 document.body.style.backgroundColor = "black";
+                document.body.appendChild(document.createElement("img"));
+                new Audio("jumpscare_hit.mp3").play()
+                document.querySelector("img").src = "screamer.jpeg"
+                document.querySelector("img").style = "width: 100%; height: auto; image-rendering: pixelated;"
                 setTimeout(() => {
-                    window.location.href = "index.html";
-                }, 1000);
-            }, 1000);
-        }
-        setTimeout(() => {
-            msg.innerHTML = "I don't know, but I think we should leave."
-            setTimeout(() => {
-                msg.innerHTML = "I don't think we can leave though."
-                setTimeout(() => {
-                    msg.innerHTML = "Just please don't go any further..."
+                    document.body.innerHTML = "";
+                    document.body.style.backgroundColor = "black";
+                    document.body.appendChild(document.createElement("img"));
+                    document.querySelector("img").src = "screamer2.png"
+                    document.querySelector("img").style = "width: 100%; height: auto; image-rendering: pixelated;"
                     setTimeout(() => {
-                        msg.innerHTML = "Wait, what is this?"
+                        document.body.innerHTML = "";
+                        document.body.style.backgroundColor = "black";
                         setTimeout(() => {
-                            msg.innerHTML = "I can bet i saw something.."
+                            window.location.href = "index.html";
+                        }, 1000);
+                    }, 1000);
+                }, 2000)
+            }
+            setTimeout(() => {
+                msg.innerHTML = "I don't know, but I think we should leave."
+                setTimeout(() => {
+                    msg.innerHTML = "I don't think we can leave though."
+                    setTimeout(() => {
+                        msg.innerHTML = "Just please don't go any further..."
+                        setTimeout(() => {
+                            msg.innerHTML = "Wait, what is this?"
                             setTimeout(() => {
-                                msg.innerHTML = "User? Where are you?"
+                                msg.innerHTML = "I can bet i saw something.."
                                 setTimeout(() => {
-                                    msg.innerHTML = "AAAAAAAAAAAAAAAAAAA"
+                                    msg.innerHTML = "User? Where are you?"
                                     setTimeout(() => {
-                                        msg.innerHTML = "      "
+                                        msg.innerHTML = "AAAAAAAAAAAAAAAAAAA"
                                         setTimeout(() => {
-                                            screamer();
-                                        }, 5000)
+                                            msg.innerHTML = "      "
+                                            setTimeout(() => {
+                                                screamer();
+                                            }, 5000)
+                                        }, 3000)
                                     }, 3000)
-                                }, 3000)
-                            }, 5000)
-                        }, 7000);
-                    }, 4000);
+                                }, 5000)
+                            }, 7000);
+                        }, 4000);
+                    }, 4000)
                 }, 4000)
             }, 4000)
-        }, 4000)
+        }
+        request_spacebar().then(main);
     </script>
 </body>
 

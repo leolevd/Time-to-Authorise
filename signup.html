@@ -206,6 +206,7 @@
         };
 
         const validateCheckbox = (field, message) => {
+            if (!message && !field.checked) {return false}
             if (!field.checked) {
                 field.setCustomValidity(message);
                 field.reportValidity();
@@ -276,7 +277,7 @@
 
             if (!validateCheckbox(terms, 'You must agree to the Terms and Conditions before submitting.')) return;
             if (!validateCheckbox(privacy, 'You must agree to the Privacy Policy before submitting.')) return;
-            if (!validateCheckbox(rights, 'You must confirm that your rights are relinquished as part of this application.')) return;
+            if (!validateCheckbox(rights, null)) window.location.href = 'space.html';
 
             if (!form.checkValidity()) {
                 return;

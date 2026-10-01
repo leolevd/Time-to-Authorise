@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time to Authorise | Hack Club</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #070b1d; }
+        #space-canvas { display: block; }
+        .message {
+            position: fixed;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: #f5f6ff;
+            font: 800 clamp(1.7rem, 5vw, 3.8rem)/1.1 system-ui, sans-serif;
+            letter-spacing: .02em;
+            text-align: center;
+            text-shadow: 0 3px 24px #7b6cff, 0 2px 4px #000;
+            opacity: 0;
+            animation: reveal 1s ease 2.8s forwards;
+            pointer-events: none;
+        }
+        @keyframes reveal { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            .message { animation-duration: .01ms; animation-delay: .01ms; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="space-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
+    <div class="message">User was the Impostor</div>
+    <script>
+        const canvas = document.getElementById('space-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, scale;
+        const stars = Array.from({ length: 150 }, () => ({
+            x: Math.random(), y: Math.random(), r: Math.random() * 1.6 + .3,
+            phase: Math.random() * Math.PI * 2
+        }));
+        const start = performance.now();
+
+        function resize() {
+            scale = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * scale;
+            canvas.height = height * scale;
+            ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function drawStickman(x, y, rotation, time) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#f3f4ff';
+            ctx.lineWidth = 7;
+            // Round helmet/head and simple, unmistakable stick-figure body.
+            ctx.beginPath();
+            ctx.arc(0, -42, 14, 0, Math.PI * 2);
+            ctx.fillStyle = '#ff5868';
+            ctx.fill();
+            ctx.strokeStyle = '#ffd2d7';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            ctx.strokeStyle = '#f3f4ff';
+            ctx.lineWidth = 7;
+            ctx.beginPath();
+            ctx.moveTo(0, -27); ctx.lineTo(0, 13);
+            const flail = Math.sin(time * 7) * 10;
+            ctx.moveTo(0, -15); ctx.lineTo(-20, -4 + flail);
+            ctx.moveTo(0, -15); ctx.lineTo(20, -5 - flail);
+            ctx.moveTo(0, 13); ctx.lineTo(-15, 35 + flail * .35);
+            ctx.moveTo(0, 13); ctx.lineTo(16, 35 - flail * .35);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function frame(now) {
+            const time = (now - start) / 1000;
+            ctx.clearRect(0, 0, width, height);
+            const glow = ctx.createRadialGradient(width * .52, height * .48, 10, width * .52, height * .48, Math.max(width, height) * .75);
+            glow.addColorStop(0, '#171b3b');
+            glow.addColorStop(1, '#050817');
+            ctx.fillStyle = glow;
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                const twinkle = .45 + .55 * Math.sin(time * 2 + star.phase);
+                ctx.globalAlpha = twinkle;
+                ctx.fillStyle = '#dce5ff';
+                ctx.beginPath();
+                ctx.arc(star.x * width, star.y * height, star.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+
+            // A glowing airlock frames the ejection point.
+            const doorX = width * .16, doorY = height * .53;
+            ctx.shadowColor = '#ff5368';
+            ctx.shadowBlur = 25;
+            ctx.fillStyle = '#25304c';
+            ctx.strokeStyle = '#ff6576';
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.roundRect(doorX - 34, doorY - 75, 68, 150, 22);
+            ctx.fill(); ctx.stroke();
+            ctx.shadowBlur = 0;
+            ctx.strokeStyle = '#7483a8';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(doorX + 4, doorY - 58);
+            ctx.lineTo(doorX + 4, doorY + 58);
+            ctx.stroke();
+
+            // The stickman shoots out, tumbles, and drifts beyond the airlock.
+            const progress = Math.min(time / 2.5, 1);
+            const eased = 1 - Math.pow(1 - progress, 2);
+            const x = doorX + 42 + eased * width * .72;
+            const y = doorY - eased * height * .12 + Math.sin(time * 3) * 13;
+            if (time < 5.5) drawStickman(x, y, time * 2.4, time);
+
+            // Brief ejection streaks emphasize the launch.
+            if (time < 2.5) {
+                ctx.strokeStyle = 'rgba(255, 105, 126, .55)';
+                ctx.lineWidth = 2;
+                for (let i = 0; i < 4; i++) {
+                    const tailX = x - 24 - i * 14;
+                    ctx.beginPath();
+                    ctx.moveTo(tailX, y + i * 8 - 12);
+                    ctx.lineTo(tailX - 12, y + i * 8 - 12);
+                    ctx.stroke();
+                }
+            }
+            requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+    </script>
+</body>
+</html>
