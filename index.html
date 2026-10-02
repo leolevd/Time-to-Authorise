@@ -59,8 +59,7 @@
     <h1>Time to Authorise</h1>
     <!-- Hey! I hope you are here not to cheat things through, since it's no fun! -->
     <button id="authorize-button" onclick="location.href='signup.html'">Sign up</button>
-    <button id="sign-in-button" onclick="alert('You have to create account, since our forces tell me you haven\'t yet!'); document.getElementById('sign-in-button').style.display = 'none';">Log in</button>
-    <!-- TODO: make alert prettier -->
+    <button id="sign-in-button" onclick="document.getElementById('sign-in-button').outerHTML = '<p>You have to create account, or you will ruin the purpose of the site</p>'; document.querySelector('p').addEventListener('click', function() {location.href='think_about_what_youve_done.html';})">Log in</button>
     <footer style="background-color: rgb(21, 21, 21); color: white; padding: 1rem; text-align: center; width: 100%; position: fixed; bottom: 0; border-top: 1px solid #3a3a3a;">
         <p>Made by leolevd</p>
     </footer>
