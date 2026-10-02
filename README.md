@@ -11,4 +11,7 @@ Alpha 0.3:
 Beta 0.3
     - Added endings
     - Some fixes
+Release 1.0
+    - 4 Endings
+    - All bugs fixed
 ```
