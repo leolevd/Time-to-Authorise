@@ -35,14 +35,14 @@
         }
         async function main() {
             const msg = document.querySelector("div#msg").querySelector("p");
-            function screamer() {
+            async function screamer() {
                 window.scrollTo(0, 0);
                 document.documentElement.style.overflow = "hidden";
                 document.body.style.overflow = "hidden";
                 document.body.innerHTML = "";
                 document.body.style.backgroundColor = "black";
                 document.body.appendChild(document.createElement("img"));
-                new Audio("jumpscare_hit.mp3").play()
+                await new Audio("jumpscare_hit.mp3").play()
                 document.querySelector("img").src = "screamer.jpeg"
                 document.querySelector("img").style = "width: 100%; height: auto; image-rendering: pixelated;"
                 setTimeout(() => {
@@ -50,7 +50,7 @@
                     document.body.style.backgroundColor = "black";
                     document.body.appendChild(document.createElement("img"));
                     document.querySelector("img").src = "screamer2.png"
-                    document.querySelector("img").style = "width: 100%; height: auto; image-rendering: pixelated;"
+                    document.querySelector("img").style = "width: 70%; height: auto; image-rendering: pixelated;"
                     setTimeout(() => {
                         document.body.innerHTML = "";
                         document.body.style.backgroundColor = "black";
